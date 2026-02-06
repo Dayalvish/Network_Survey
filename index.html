@@ -154,7 +154,7 @@
     const form = document.getElementById('survey-form');
     form.addEventListener('submit', e => {
         e.preventDefault();
-        const scriptURL = 'YOUR_GOOGLE_SCRIPT_URL_HERE';
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyffRwH_9nxgF3TqRd2wuFdDjWNSUbxqv-Pjxp0XAVUL8UZUEZTHykUO-M69SAcLMwnVQ/exec';
         fetch(scriptURL, { method: 'POST', body: new FormData(form)})
             .then(response => alert('Success! Survey Logged.'))
             .catch(error => console.error('Error!', error.message));
@@ -162,4 +162,5 @@
 </script>
 
 </body>
+
 </html>
