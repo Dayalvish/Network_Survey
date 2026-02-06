@@ -5,27 +5,77 @@
     <title>Epiroc Fleet Network Survey</title>
     <style>
         :root { --epiroc-yellow: #FFD700; --epiroc-blue: #003366; --bg: #f8f9fa; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); padding: 20px; }
-        .survey-card { max-width: 650px; margin: auto; background: white; border-top: 8px solid var(--epiroc-yellow); border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .header { background: var(--epiroc-blue); color: white; padding: 25px; text-align: center; border-radius: 0 0 4px 4px; }
+        
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            background: var(--bg); 
+            padding: 40px 20px; 
+        }
+
+        /* The Dynamic Dual-Line Border Card */
+        .survey-card { 
+            max-width: 650px; 
+            margin: auto; 
+            background: white; 
+            /* Dual-line border setup */
+            border: 6px double var(--epiroc-blue); 
+            border-top: 12px solid var(--epiroc-yellow); /* Thick Epiroc yellow accent at top */
+            border-radius: 8px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header { 
+            background: var(--epiroc-blue); 
+            color: white; 
+            padding: 25px; 
+            text-align: center; 
+        }
+        
         .logo { font-size: 32px; font-weight: 900; color: var(--epiroc-yellow); margin-bottom: 5px; }
+        
         form { padding: 30px; }
+        
         label { display: block; margin: 15px 0 5px; font-weight: bold; color: #333; }
-        select, input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 15px; margin-bottom: 10px; }
+        
+        select, input, textarea { 
+            width: 100%; 
+            padding: 12px; 
+            border: 1px solid #ddd; 
+            border-radius: 4px; 
+            font-size: 15px; 
+            margin-bottom: 10px;
+            box-sizing: border-box; /* Ensures padding doesn't break the border */
+        }
         
         .button-group { display: flex; gap: 10px; margin-top: 25px; }
-        .btn { flex: 1; color: white; border: none; padding: 15px; border-radius: 4px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        
+        .btn { 
+            flex: 1; 
+            color: white; 
+            border: none; 
+            padding: 15px; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: 0.3s; 
+        }
+        
         .btn-submit { background: var(--epiroc-blue); }
         .btn-submit:hover { background: #002244; }
         .btn-print { background: #6c757d; }
         .btn-print:hover { background: #5a6268; }
 
-        /* PDF/Print Optimization */
+        /* Print Optimization */
         @media print {
             body { background: white; padding: 0; }
-            .survey-card { box-shadow: none; border: none; max-width: 100%; }
+            .survey-card { 
+                box-shadow: none; 
+                border: 4px double black; /* High contrast for PDF */
+                max-width: 100%; 
+            }
             .button-group, .btn { display: none !important; }
-            input, select { border: none !important; appearance: none; -webkit-appearance: none; color: black !important; }
         }
     </style>
 </head>
@@ -38,8 +88,9 @@
     </div>
 
     <form id="survey-form">
-<label for="Date">Date of Survey</label>
-        <input type="date" name="Date Of Survey" id="Date Of Survey" placeholder="Date Of Survey" required>
+        <label for="survey_date">Date of Survey</label>
+        <input type="date" name="survey_date" id="survey_date" required>
+
         <label for="customer">Customer Name</label>
         <select name="customer" id="customer" required>
             <option value="">-- Select Customer --</option>
@@ -57,19 +108,18 @@
         <select name="mines" id="mines" required disabled>
             <option value="">-- Select Mines --</option>
         </select>
-         
-          <label for="Site Incharge">Concerned Incharge</label>
-        <input type="text" name="Concerned Incharge" id="Concerned Incharge" placeholder="Name & Designation" required>
+          
+        <label for="incharge">Concerned Incharge</label>
+        <input type="text" name="incharge" id="incharge" placeholder="Name & Designation" required>
 
-        
-         <label for="wifi_type">WiFi Type</label>
+        <label for="wifi_type">WiFi Type</label>
         <select name="wifi_type" id="wifi_type">
             <option value="Wifi 2.4Ghz">Wifi 2.4Ghz</option>
             <option value="Wifi 5Ghz">Wifi 5Ghz</option>
             <option value="LTE_Private">Private LTE</option>
             <option value="Standard_AP">Standard AP</option>
             <option value="No WiFi">No WiFi Available at site</option>
-        </select>        
+        </select>         
 
         <label for="service_provider">Service Provider</label>
         <select name="service_provider" id="service_provider">
@@ -106,6 +156,7 @@
 </div>
 
 <script>
+    // Relational Data Logic
     const dataModel = {
         "NMDC Ltd": {
             "Bacheli": ["Deposit5", "Deposit10"],
@@ -129,7 +180,6 @@
         siteSelect.innerHTML = '<option value="">-- Select Site --</option>';
         minesSelect.innerHTML = '<option value="">-- Select Mines --</option>';
         minesSelect.disabled = true;
-
         if (this.value && dataModel[this.value]) {
             siteSelect.disabled = false;
             Object.keys(dataModel[this.value]).forEach(site => {
@@ -137,9 +187,7 @@
                 opt.value = site; opt.innerHTML = site;
                 siteSelect.appendChild(opt);
             });
-        } else {
-            siteSelect.disabled = true;
-        }
+        } else { siteSelect.disabled = true; }
     });
 
     siteSelect.addEventListener('change', function() {
@@ -152,17 +200,16 @@
                 opt.value = mine; opt.innerHTML = mine;
                 minesSelect.appendChild(opt);
             });
-        } else {
-            minesSelect.disabled = true;
-        }
+        } else { minesSelect.disabled = true; }
     });
 
+    // Submit Logic - Make sure scriptURL is correct
     const form = document.getElementById('survey-form');
     form.addEventListener('submit', e => {
         e.preventDefault();
         const scriptURL = 'https://script.google.com/macros/s/AKfycbyffRwH_9nxgF3TqRd2wuFdDjWNSUbxqv-Pjxp0XAVUL8UZUEZTHykUO-M69SAcLMwnVQ/exec';
         fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-            .then(response => alert('Success! Survey Logged.'))
+            .then(response => alert('Success! Survey Logged to Google Sheet.'))
             .catch(error => console.error('Error!', error.message));
     });
 </script>
