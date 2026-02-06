@@ -38,6 +38,8 @@
     </div>
 
     <form id="survey-form">
+<label for="Date">Date of Survey</label>
+        <input type="date" name="Date Of Survey" id="Date Of Survey" placeholder="Date Of Survey" required>
         <label for="customer">Customer Name</label>
         <select name="customer" id="customer" required>
             <option value="">-- Select Customer --</option>
@@ -55,8 +57,12 @@
         <select name="mines" id="mines" required disabled>
             <option value="">-- Select Mines --</option>
         </select>
+         
+          <label for="Site Incharge">Concerned Incharge</label>
+        <input type="text" name="Concerned Incharge" id="Concerned Incharge" placeholder="Name & Designation" required>
 
-        <label for="wifi_type">WiFi Type</label>
+        
+         <label for="wifi_type">WiFi Type</label>
         <select name="wifi_type" id="wifi_type">
             <option value="Wifi 2.4Ghz">Wifi 2.4Ghz</option>
             <option value="Wifi 5Ghz">Wifi 5Ghz</option>
@@ -162,5 +168,4 @@
 </script>
 
 </body>
-
 </html>
